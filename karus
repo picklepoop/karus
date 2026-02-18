@@ -709,7 +709,7 @@ setupSlider(fovBg, fovFill, fovKnob, fovLabel, function(pct)
 end, 500)
 
 setupSlider(flySpeedBg, flySpeedFill, flySpeedKnob, flySpeedLabel, function(pct)
-    FlySettings.Speed = math.floor(pct * 1000)
+    FlySettings.Speed = math.floor(pct * 5000)
 end, 1000)
 
 setupSlider(strafeRadiusBg, strafeRadiusFill, strafeRadiusKnob, strafeRadiusLabel, function(pct)
@@ -718,8 +718,8 @@ end, 50)
 
 setupSlider(strafeSpeedBg, strafeSpeedFill, strafeSpeedKnob, strafeSpeedLabel, function(pct)
     StrafeSettings.HSpeed = math.floor(pct * 10)
-    StrafeSettings.VSpeed = math.floor(pct * 50)
-end, 50)
+    StrafeSettings.VSpeed = math.floor(pct * 500)
+end, 500)
 
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 --  Keybind changing
