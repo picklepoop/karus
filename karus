@@ -163,6 +163,8 @@ local function updateNoclip()
     end
 end
 
+RunService.Heartbeat:Connect(updateNoclip)
+
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- Validation
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -428,7 +430,7 @@ tabVisual.MouseButton1Click:Connect(function() switchTab("visual") end)
 tabWhitelist.MouseButton1Click:Connect(function() switchTab("whitelist") end)
 
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
--- Whitelist Tab  (defined BEFORE PlayerAdded/PlayerRemoving)
+-- Whitelist Tab
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 local function refreshWhitelistTab()
     for _, child in ipairs(whitelistTab:GetChildren()) do
@@ -958,7 +960,7 @@ local function updateStatus()
 end
 
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
--- Sliders
+-- Sliders – FIXED camlock label (only this part changed)
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 local function setupSlider(bg, fill, knob, label, setter, maxVal, labelFormat)
     local draggingS = false
@@ -980,7 +982,12 @@ local function setupSlider(bg, fill, knob, label, setter, maxVal, labelFormat)
         knob.Position = UDim2.new(pct, -8, 0.5, -8)
         local value = maxVal and math.floor(pct * maxVal) or pct
         setter(value)
-        label.Text = string.format(labelFormat, value)
+        -- FIXED LINE: always format as percentage when maxVal is nil
+        if maxVal == nil then
+            label.Text = string.format("Camlock Strength: %.0f%%", pct * 100)
+        else
+            label.Text = string.format(labelFormat or "%d", value)
+        end
     end)
 end
 
@@ -1189,4 +1196,4 @@ RunService.Heartbeat:Connect(function(dt)
 end)
 
 updateStatus()
-print("Karus loaded")
+print("Karus loaded – camlock slider label now correctly shows 0–100%")
